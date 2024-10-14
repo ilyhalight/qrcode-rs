@@ -1,0 +1,20 @@
+{
+  "name": "qrcode-bench",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "fast_qr": "^0.12.5",
+    "mitata": "^1.0.10",
+    "qrcode": "^1.5.4",
+    "zxing-wasm": "^1.2.15"
+  },
+  "scripts": {
+    "bench": "bun run mitata.js"
+  }
+}

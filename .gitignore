@@ -1,0 +1,18 @@
+src/lib copy.rs
+/target
+
+.vscode
+.env
+
+# dependencies
+node_modules
+
+# misc
+.DS_Store
+*.pem
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
