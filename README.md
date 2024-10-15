@@ -4,6 +4,10 @@
 
 Supported platforms: Windows x64, Linux x64 / Aarch64
 
+```bash
+bun i @toil/qrcode-rs
+```
+
 ## Available functions
 
 1. Generate QR Code and get result as png base64

@@ -29,6 +29,9 @@
     "blazing",
     "fast"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "compile": "bun run crossCompile.ts"
   }
