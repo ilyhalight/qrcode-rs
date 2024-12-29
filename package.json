@@ -1,12 +1,12 @@
 {
   "name": "@toil/qrcode-rs",
   "description": "⚡ Fast qrcode-rust bindings for bun.sh",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Toil",
   "license": "MIT",
   "type": "module",
-  "main": "./pkg/index.js",
-  "module": "./pkg/index.js",
+  "main": "./pkg/index.ts",
+  "module": "./pkg/index.ts",
   "homepage": "https://github.com/ilyhalight/bun-qrcode-rs",
   "repository": {
     "type": "git",
@@ -15,6 +15,14 @@
   "bugs": {
     "url": "https://github.com/ilyhalight/bun-qrcode-rs/issues"
   },
+  "os": [
+    "win32",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
   "files": [
     "pkg",
     "build"
