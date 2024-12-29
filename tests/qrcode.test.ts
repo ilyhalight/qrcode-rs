@@ -1,5 +1,5 @@
 import { test, expect, describe } from "bun:test";
-import { qrcode } from "../pkg";
+import { qrcode, qrcodeString, QRCodeError } from "../pkg";
 
 describe("generate qrcode (png)", () => {
   test("default text", () => {
@@ -7,7 +7,25 @@ describe("generate qrcode (png)", () => {
       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOgAAADoCAAAAADAwvekAAAEqElEQVR4Ae3AA6AkWZbG8f937o3IzKdyS2Oubdu2bdu2bdu2bWmMnpZKr54yMyLu+Xa3anqmhztr1a+a/xeo/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOVf4H4tzHPn3hO5jmJfxvzQlH5/4HK/w9U/n+g8v8Dlf8fqPz/QOX/ByovIvOiEc+fuMJcIa4QV5jnZF404kVC5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/CuJ58+8aMQV5kUjnj/zr0Ll/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8FzNXiOdk/lNR+f+Byv8PVP5/oPL/A5X/H6j8/0Dl/wcq/0XMFeIKc4X4L0Hl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8K5l/HfGczBXiRWP+Q1D5/4HK/w9U/n+g8v8Dlf8fqPz/QOX/ByovIvHvY64QV5grxPMn/kNR+f+Byv8PVP5/oPL/A5X/H6j8/0Dl/wdk/nuI52T+U1H5/4HK/w9U/n+g8v8Dlf8fqPz/QOX/Byr/AnGFeU7iCnOFeE7mCnGFuUJcYZ6TuMJcIa4w/yGo/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/yDmOYkrzBXiCvOiMVeI52Sek7jCvFBU/n+g8v8Dlf8fqPz/QOX/Byr/P1D5/4HKfxDxnMwV4jmJK8wV4vkTV5j/EFT+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcqLSFxhrjDPyTwncYW5QjwncYV5TuIK85zEFebfhMr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPkXmCvEFeJFY64QV5grxBXmCvGczBXiCnOF+Xeh8v8Dlf8fqPz/QOX/Byr/P1D5/4HK/w9UXkTm30c8J3GFedGIK8wV4l+Fyv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z9Q+ReIfxtzhblCXGGeP/GczBXiCvP8mRcJlf8fqPz/QOX/Byr/P1D5/4HK/w9U/n+g8iIyLxrxnMTzJ54/85zM82f+Vaj8/0Dl/wcq/z9Q+f+Byv8PVP5/oPL/A5V/JfH8mefPvHDmCnGFeE7m+RNXmBcJlf8fqPz/QOX/Byr/P1D5/4HK/w9U/n+g8p9MXGGuEM+feU7iCvHCiSvMC0Xl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8JzNXiOdkrhBXmBeNeU7iRULl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8K5l/H/OczBXihTPPn3mRUPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKi8i8W8jrjBXiOfPPCfxnMQV5gpxhXmRUPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HZP5foPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byv8P/CMjz1qTKbFYoQAAAABJRU5ErkJggg=="
     );
   });
+  test("with emoji", () => {
+    expect(qrcode("🦊")).toEqual(
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOgAAADoCAAAAADAwvekAAAEpElEQVR4Ae3AA6AkWZbG8f937o3IzKdyS2Oubdu2bdu2bdu2bWmMnpZKr54yMyLu+Xa3anqmhztr1a+a/xeo/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOVf4H4tzHPSVxhrhBXmOck/m3MC0Xl/wcq/z9Q+f+Byv8PVP5/oPL/A5X/H6i8iMyLRjx/5gpxhblCXGGek3nRiBcJlf8fqPz/QOX/Byr/P1D5/4HK/w9U/n+g8q8knj/zryNeNOL5M/8qVP5/oPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byn8RcYV5TuK/BJX/H6j8/0Dl/wcq/z9Q+f+Byv8PVP5/oPJfTPy3oPL/A5X/H6j8/0Dl/wcq/z9Q+f+Byv8PVP6VzL+OeP7Mi8b8h6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1ReROLfx1whnpO4wjwn8R+Kyv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z8g819DPCfzX4rK/w9U/n+g8v8Dlf8fqPz/QOX/Byr/P1D5F4grzHMSV5grxHMyV4jnTzx/5gpxhfkPQeX/Byr/P1D5/4HK/w9U/n+g8v8Dlf8fqPwLzHMSV5grxHMyz8k8f+IKc4V40YgrzL8Klf8fqPz/QOX/Byr/P1D5/4HK/w9U/n+g8iISL5y5Qjx/5grx/JkrxHMSz8lcIa4wLxIq/z9Q+f+Byv8PVP5/oPL/A5X/H6j8/4DMCyeuMC+cuMI8J/GczHMSLxpzhXj+zAtF5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+QeeHE82euEC+cuUI8f+YK8fyZF05cYV4oKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5V9gXjjzwokrzBXiCvPCmSvEFeY5iX8VKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5V8g/m3MFeb5E8/JXCGeP3GF+Teh8v8Dlf8fqPz/QOX/Byr/P1D5/4HK/w9UXkTmRSOek7jCXGH+dcwV4grxnMyLhMr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPlXEs+fef7McxJXmCvEi8ZcIa4wV4grzAtF5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/CcTz8k8J3OFeE7iCvP8iX8VKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5T+ZuUI8J3GF+dcxz0m8SKj8/0Dl/wcq/z9Q+f+Byv8PVP5/oPL/A5V/JfNvY64Qz0lcYZ6TeE7iCvOczIuEyv8PVP5/oPL/A5X/H6j8/0Dl/wcq/z9QeRGJfxtxhbnCPH/iCvPCiedkXiRU/n+g8v8Dlf8fqPz/QOX/Byr/P1D5/wGZ/xeo/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wOV/x+o/P9A5f8HKv8/UPn/gcr/D1T+f6Dy/wP/CBzNWI/7eZITAAAAAElFTkSuQmCC"
+    );
+  });
   test("empty string", () => {
     expect(qrcode("")).toEqual(null);
+  });
+  test("data too long", () => {
+    expect(() =>
+      qrcode(
+        `vitae vitae vit vitae vitae condimentum nibh malesuada. Aliquam vitae suscipit nisl, vitae viverra magna. Mauris convallis gravida tellus, vel placerat felis condimentum eu. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse porttitor metus velit, sed placerat lacus egestas vel. Aenean id ex varius, eleifend purus non, convallis dui. Maecenas imperdiet et leo in rutrum.Curabitur malesuada dui urna, sit amet cursus risus convallis nec. Vestibulum eleifend consectetur vulputate. Nulla accumsan, sem nec tempus rutrum, ipsum elit faucibus est, ut pretium diam tortor vel arcu. Duis ac ornare mi. Donec cursus erat non neque dignissim pulvinar. Quisque eleifend tortor urna, at feugiat ante faucibus nec. Duis commodo semper odio, a placerat diam lacinia eleifend. Nam malesuada metus lorem, at mollis ipsum auctor non.Maecenas vel justo sem. Proin euismod sit amet sapien id accumsan. Sed fringilla ipsum vitae massa congue, quis imperdiet ex dignissim. Fusce lobortis tempus tortor, eget tincidunt lacus auctor ac. Nulla sagittis nulla id magna posuere laoreet. Phasellus fringilla tellus in leo placerat, in vestibulum mauris sollicitudin. Proin vulputate tellus eget elementum finibus. Donec libero felis, pharetra ut rhoncus ut, fringilla sollicitudin est. Curabitur condimentum massa tincidunt sem ornare, nec vehicula nunc feugiat. Pellentesque faucibus maximus sapien, in vulputate libero sollicitudin eu. Aliquam blandit diam et purus vulputate mattis. Donec non tempus nisl. Morbi mauris tellus, facilisis nec leo eget, convallis vehicula arcu.Curabitur consequat imperdiet magna, vitae scelerisque lorem ornare eget. Vestibulum eu faucibus nunc. Morbi malesuada lacus ut placerat elementum. Vestibulum eget arcu urna. Duis et urna euismod, pharetra turpis vitae, ultrices lacus. Aliquam lobortis augue ac enim convallis convallis. Curabitur eget commodo eros. Morbi tristique hendrerit iaculis. Praesent consectetur sodales mauris, at accumsan justo pellentesque eget. Cras euismod scelerisque velit, at vulputate augue convallis quis. Praesent in bibendum massa, ut eleifend metus. Etiam neque lorem, pellentesque ac libero eu, tincidunt placerat neque. Cras placerat turpis at libero commodo euismod. Donec ipsum dui, egestas sed orci non, viverra lobortis augue.`
+      )
+    ).toThrow(QRCodeError.DataTooLong);
+  });
+});
+
+describe("generate qrcode (string)", () => {
+  test("string input", () => {
+    expect(qrcodeString("qrcode-rs")).toBeString();
   });
 });
