@@ -1,33 +1,39 @@
 ## Results
 
-As you can see, **qrcode-rs** are second only to **fast_qr**. But this cann't be said to be objective, since **fast_qr** returns *svg instead of png*, which turns out to be a bit inconsistent compared to other libraries.
+As you can see, **qrcode-rs** are second only to **fast_qr**. But this can't be said to be objective, since **fast_qr** returns _svg instead of png_, which turns out to be a bit inconsistent compared to other libraries.
 
 Ubuntu WSL (Ryzen 3700x16):
 
 ```bash
-$ bun run mitata.ts
-clk: ~3.86 GHz
+$ bun run mitata.js
+clk: ~2.02 GHz
 cpu: AMD Ryzen 7 PRO 3700 8-Core Processor
-runtime: bun 1.1.30 (x64-linux)
+runtime: bun 1.2.5 (x64-linux)
 
-benchmark              avg (min … max) p75   p99    (min … top 1%)
--------------------------------------- -------------------------------
-qrcode-rs               225.45 µs/iter 224.84 µs  █
-               (210.44 µs … 559.09 µs) 329.69 µs ▅██▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
-fast_qr                 181.86 µs/iter 175.12 µs █
-                 (165.23 µs … 2.16 ms) 399.81 µs █▄▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-qrcode-node               1.47 ms/iter   1.37 ms ▆█
-                   (1.13 ms … 4.90 ms)   3.94 ms ██▅▂▂▁▁▁▁▁▂▁▁▁▁▁▂▁▁▁▁
-zxing-wasm              920.57 µs/iter 914.05 µs  █▂
-                 (833.42 µs … 3.48 ms)   1.40 ms ▄██▅▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+benchmark                   avg (min … max) p75 / p99    (min … top 1%)
+------------------------------------------- -------------------------------
+qrcode-rs                    237.74 µs/iter 246.53 µs  █
+                    (206.17 µs … 554.27 µs) 401.00 µs  █
+                    (  0.00  b … 324.00 kb)   3.63 kb ▆██▄▃▃▄▃▂▂▂▂▂▁▁▁▁▁▁▁▁
+
+fast_qr                      217.69 µs/iter 229.29 µs  █
+                      (178.15 µs … 1.68 ms) 420.84 µs ██
+                    (  0.00  b …   2.58 mb)  19.81 kb ██▆▇▆▄▃▃▃▃▂▂▂▁▁▁▁▁▁▁▁
+
+qrcode-node                    1.88 ms/iter   1.84 ms  █
+                        (1.09 ms … 6.09 ms)   5.64 ms ▂██
+                    (  0.00  b …   1.07 mb)  54.40 kb ███▇▅▃▂▂▁▁▁▂▁▂▂▂▂▂▂▂▁
+
+zxing-wasm                   378.64 µs/iter 394.42 µs  █
+                      (299.36 µs … 4.98 ms) 766.64 µs ▆█▄
+                    (  0.00  b …   6.19 mb)  33.28 kb █████▅▄▄▃▂▂▂▂▁▁▁▁▁▁▁▁
 
 summary
   fast_qr
-   1.24x faster than qrcode-rs
-   5.06x faster than zxing-wasm
-   8.11x faster than qrcode-node
+   1.09x faster than qrcode-rs
+   1.74x faster than zxing-wasm
+   8.64x faster than qrcode-node
 ```
-
 
 Debian 12 (Xeon Gold 6150x4)
 
@@ -39,13 +45,13 @@ runtime: bun 1.1.30 (x64-linux)
 
 benchmark              avg (min … max) p75   p99    (min … top 1%)
 -------------------------------------- -------------------------------
-qrcode-rs               535.30 µs/iter 695.31 µs ▆▄             ██    
+qrcode-rs               535.30 µs/iter 695.31 µs ▆▄             ██
                (286.20 µs … 880.10 µs) 809.23 µs ██▆▄▄▅▄▄▄▄▃▃▄▃▅███▄▃▂
-fast_qr                 337.11 µs/iter 359.87 µs   █▇                 
+fast_qr                 337.11 µs/iter 359.87 µs   █▇
                  (204.41 µs … 2.63 ms) 938.98 µs ▂▃███▇▃▂▁▁▁▁▁▁▁▁▁▁▁▁▁
-qrcode-node               3.25 ms/iter   3.60 ms   ▅▅█▃▄▃             
+qrcode-node               3.25 ms/iter   3.60 ms   ▅▅█▃▄▃
                    (1.92 ms … 6.96 ms)   6.35 ms ▇▇██████▆▄▆▂▃▂▄▃▃▂▂▂▁
-zxing-wasm                1.77 ms/iter   1.83 ms  ██▄                 
+zxing-wasm                1.77 ms/iter   1.83 ms  ██▄
                    (1.29 ms … 6.04 ms)   4.49 ms ▄████▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
 
 summary
@@ -56,6 +62,7 @@ summary
 ```
 
 Ubuntu (Ampere A1x4)
+
 ```bash
 $ bun run mitata.ts
 clk: ~2.37 GHz
@@ -64,13 +71,13 @@ runtime: bun 1.1.30 (arm64-linux)
 
 benchmark              avg (min … max) p75   p99    (min … top 1%)
 -------------------------------------- -------------------------------
-qrcode-rs               383.88 µs/iter 386.32 µs  █▃                  
+qrcode-rs               383.88 µs/iter 386.32 µs  █▃
                (373.28 µs … 515.85 µs) 453.73 µs ▄██▅▄▄▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-fast_qr                 271.47 µs/iter 271.20 µs  █▄                  
+fast_qr                 271.47 µs/iter 271.20 µs  █▄
                  (244.72 µs … 1.07 ms) 448.37 µs ▅██▅▂▂▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-qrcode-node               2.56 ms/iter   2.61 ms ▃█▂                  
+qrcode-node               2.56 ms/iter   2.61 ms ▃█▂
                    (2.15 ms … 4.83 ms)   4.29 ms ███▅▃▂▂▁▂▂▂▂▂▂▂▂▂▁▁▁▁
-zxing-wasm                1.43 ms/iter   1.40 ms ▇█                   
+zxing-wasm                1.43 ms/iter   1.40 ms ▇█
                    (1.32 ms … 4.37 ms)   3.00 ms ██▃▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
 summary
@@ -112,11 +119,14 @@ summary
 
 1. Install bun
 2. Install depends
+
 ```
 bun install
 ```
+
 1. Compile qrcode-rs
 2. Run bench
+
 ```
 bun bench
 ```

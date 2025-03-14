@@ -1,5 +1,6 @@
 src/lib copy.rs
 /target
+/build
 
 .vscode
 .env

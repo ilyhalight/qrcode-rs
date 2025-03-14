@@ -3,7 +3,7 @@ import { bench, run, summary } from "mitata";
 import { qrcode } from "../pkg";
 import QRCode from "qrcode";
 import init, { qr_svg, SvgOptions } from "fast_qr";
-import { writeBarcodeToImageFile } from "zxing-wasm/writer";
+import { writeBarcode } from "zxing-wasm/writer";
 
 const data = "Hello world!";
 
@@ -16,13 +16,11 @@ summary(() => {
   });
   bench("qrcode-node", async () => await QRCode.toDataURL(data));
   bench("zxing-wasm", async () => {
-    const writeOutput = await writeBarcodeToImageFile(data, {
+    const { svg } = await writeBarcode(data, {
       format: "QRCode",
     });
 
-    const blob = writeOutput.image;
-    const buffer = Buffer.from(await blob.arrayBuffer());
-    return `data:${blob.type};base64,${buffer.toString("base64")}`;
+    return `data:image/svg+xml;base64,${encodeURIComponent(svg)}`;
   });
 });
 
