@@ -1,3 +1,8 @@
+# 0.x.x
+
+- Bump rust edition to 2024
+- Updated benchmarks (bump zxing-wasm to v2)
+
 # 0.1.1
 
 - Added generate qrcode string
