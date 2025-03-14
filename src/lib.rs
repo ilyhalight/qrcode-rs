@@ -2,7 +2,7 @@ use image::Luma;
 use libc::c_char;
 use qrcode::QrCode;
 
-use base64::{engine::general_purpose, Engine as _};
+use base64::{Engine as _, engine::general_purpose};
 use image::ImageFormat;
 use std::{
     ffi::{CStr, CString},
@@ -31,7 +31,7 @@ fn return_c_str(text: String) -> *const c_char {
     p
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn qrcode(ptr: *const c_char) -> *const c_char {
     let qrcode = match qrcode_internal(ptr) {
         Ok(qrcode) => qrcode,
@@ -51,7 +51,7 @@ pub extern "C" fn qrcode(ptr: *const c_char) -> *const c_char {
     return_c_str(res_base64)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn qrcode_str(ptr: *const c_char) -> *const c_char {
     let qrcode = match qrcode_internal(ptr) {
         Ok(qrcode) => qrcode,
